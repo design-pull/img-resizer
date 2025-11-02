@@ -61,7 +61,6 @@ def process_static_file(in_path, out_folder, w, h, mode, bg_color, jpeg_quality=
     if ext == '.svg':
         png_bytes = rasterize_svg_to_png_bytes(in_path, out_w=w if mode!='fit' else None, out_h=h if mode!='fit' else None)
         im = Image.open(io.BytesIO(png_bytes)).convert('RGBA')
-        # ensure we apply chosen mode after rasterize
         img_out = {
             'stretch': resize_stretch,
             'fit': resize_fit,
@@ -73,7 +72,6 @@ def process_static_file(in_path, out_folder, w, h, mode, bg_color, jpeg_quality=
         return out_path
 
     elif ext == '.gif':
-        # animated GIF: process each frame and re-save GIF preserving durations and loop
         im = Image.open(in_path)
         frames = []
         durations = []
@@ -85,7 +83,6 @@ def process_static_file(in_path, out_folder, w, h, mode, bg_color, jpeg_quality=
                 'pad': resize_pad,
                 'fill': resize_fill
             }[mode](frame_rgba, w, h) if mode in ('stretch','fit','pad','fill') else resize_stretch(frame_rgba, w, h)
-            # convert to paletted frame for GIF
             frame_p = frame_out.convert('P', palette=Image.ADAPTIVE)
             frames.append(frame_p)
             durations.append(frame.info.get('duration', 100))
@@ -133,18 +130,10 @@ def run_resize():
     except ValueError:
         messagebox.showerror("Error", "幅と高さには整数を入力してください")
         return
-    mode = mode_var.get()
-    try:
-        bg_parts = [int(x.strip()) for x in bg_var.get().split(',')]
-        if len(bg_parts) == 3:
-            bg = (bg_parts[0], bg_parts[1], bg_parts[2], 255)
-        elif len(bg_parts) == 4:
-            bg = tuple(bg_parts)
-        else:
-            raise ValueError
-    except Exception:
-        messagebox.showerror("Error", "背景色は R,G,B または R,G,B,A の形式で入力してください")
-        return
+
+    # モードと背景色は UI から削除されたので固定値を使う
+    mode = 'pad'  # 固定: pad
+    bg = (255, 255, 255, 255)  # 固定: 白
 
     log_text.delete(1.0, tk.END)
     success = 0
@@ -169,8 +158,7 @@ btn_frame = tk.Frame(frame)
 btn_frame.grid(row=0, column=0, sticky='w')
 
 tk.Button(btn_frame, text="ファイルを選択", command=pick_files).pack(side='left', padx=2)
-tk.Button(btn_frame, text="出力フォルダ選択", command=pick_output_folder).pack(side='left', padx=2)
-tk.Button(btn_frame, text="終了", command=root.quit).pack(side='left', padx=2)
+# 「出力フォルダ選択」ボタンは削除せず、後で出力フォルダ入力の隣へ配置するためここには置かない
 
 listbox = tk.Listbox(frame, width=80, height=8)
 listbox.grid(row=1, column=0, columnspan=3, pady=8)
@@ -186,26 +174,24 @@ tk.Label(opts_frame, text="高さ:").grid(row=0, column=2, sticky='e')
 height_var = tk.StringVar(value="600")
 tk.Entry(opts_frame, textvariable=height_var, width=8).grid(row=0, column=3, sticky='w', padx=4)
 
-tk.Label(opts_frame, text="モード:").grid(row=1, column=0, sticky='e')
-mode_var = tk.StringVar(value="pad")
-tk.OptionMenu(opts_frame, mode_var, "stretch", "fit", "pad", "fill").grid(row=1, column=1, sticky='w', padx=4)
+# モードと背景色 UI は削除されたためここには何も配置しない
 
-tk.Label(opts_frame, text="背景色 (R,G,B) :").grid(row=1, column=2, sticky='e')
-bg_var = tk.StringVar(value="255,255,255")
-tk.Entry(opts_frame, textvariable=bg_var, width=12).grid(row=1, column=3, sticky='w', padx=4)
-
+# 出力フォルダ行を作り、エントリの横に「出力フォルダ選択」ボタンを配置
 out_var = tk.StringVar(value=os.path.join(os.getcwd(), "output"))
-tk.Label(frame, text="出力フォルダ:").grid(row=3, column=0, sticky='w')
-tk.Entry(frame, textvariable=out_var, width=60).grid(row=4, column=0, sticky='w', pady=4)
+out_row_frame = tk.Frame(frame)
+out_row_frame.grid(row=3, column=0, sticky='w', pady=(8,4))
+tk.Label(out_row_frame, text="出力フォルダ:").pack(side='left')
+tk.Entry(out_row_frame, textvariable=out_var, width=50).pack(side='left', padx=6)
+tk.Button(out_row_frame, text="出力フォルダ選択", command=pick_output_folder).pack(side='left')
 
 run_frame = tk.Frame(frame)
-run_frame.grid(row=5, column=0, pady=6, sticky='w')
+run_frame.grid(row=4, column=0, pady=6, sticky='w')
 tk.Button(run_frame, text="開始", command=run_resize, bg="#4CAF50", fg="white").pack(side='left', padx=6)
 tk.Button(run_frame, text="クリア", command=lambda: listbox.delete(0, tk.END)).pack(side='left', padx=6)
 
 log_label = tk.Label(frame, text="ログ:")
-log_label.grid(row=6, column=0, sticky='w')
+log_label.grid(row=5, column=0, sticky='w')
 log_text = tk.Text(frame, width=80, height=10)
-log_text.grid(row=7, column=0, pady=6)
+log_text.grid(row=6, column=0, pady=6)
 
 root.mainloop()
