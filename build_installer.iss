@@ -23,7 +23,7 @@ Name: "desktopicon"; Description: "デスクトップにショートカットを
 Source: "dist\ImgResizer.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-; ショートカットのアイコンに assets\new_icon.ico を使う
+;
 Name: "{group}\ImgResizer"; Filename: "{app}\ImgResizer.exe"; WorkingDir: "{app}"; IconFilename: "assets\new_icon.ico"
 Name: "{commondesktop}\ImgResizer"; Filename: "{app}\ImgResizer.exe"; Tasks: desktopicon; WorkingDir: "{app}"; IconFilename: "assets\new_icon.ico"
 
@@ -31,7 +31,7 @@ Name: "{commondesktop}\ImgResizer"; Filename: "{app}\ImgResizer.exe"; Tasks: des
 Filename: "{app}\ImgResizer.exe"; Description: "{cm:LaunchProgram,ImgResizer}"; Flags: nowait postinstall skipifsilent
 
 [UninstallDelete]
-; 必要に応じて追加指定してください
+;
 
 [Code]
 function InitializeSetup(): Boolean;

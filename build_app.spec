@@ -7,14 +7,14 @@ from PyInstaller.utils.hooks import collect_submodules
 project_root = os.path.abspath(os.getcwd())
 src_dir = os.path.join(project_root, 'src')
 
-# hidden imports（必要に応じて変更）
+# hidden imports
 hidden_imports = []
 try:
     hidden_imports += collect_submodules('tkinterdnd2')
 except Exception:
     pass
 
-# datas / binaries（必要ならここに追加）
+# datas / binaries
 datas = []
 binaries = []
 
