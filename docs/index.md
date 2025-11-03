@@ -1,17 +1,18 @@
 # ImgResizer — Download
 
-最新リリース: **v0.1.0**
+**Latest release:** v0.1.0
 
-Download
-- ZIP (実行ファイル): [ImgResizer-distribution.zip](https://github.com/OWNER/REPO/releases/download/v0.1.0/ImgResizer-distribution.zip)
-- Installer (optional): [ImgResizer_Installer.exe](https://github.com/OWNER/REPO/releases/download/v0.1.0/ImgResizer_Installer.exe)
+## Download
+- ZIP (Executable): [ImgResizer-distribution.zip](https://github.com/design-pull/img-resizer/releases/download/v0.1.0/ImgResizer-distribution.zip)  
+- Installer (optional): [ImgResizer_Installer.exe](https://github.com/design-pull/img-resizer/releases/download/v0.1.0/ImgResizer_Installer.exe)
 
-Installation
-1. ZIP を展開して ImgResizer.exe を実行  
-2. または Installer を実行してインストール
+## Installation
+- ZIP: 展開して `ImgResizer.exe` をダブルクリックして実行  
+- Installer: `ImgResizer_Installer.exe` を実行してウィザードに従ってインストール
 
-Checksums
-- SHA256 (ImgResizer-distribution.zip): `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+## Checksums
+- SHA256 (ImgResizer-distribution.zip): `PUT_SHA256_HASH_HERE`
 
-Support
-- Issues: https://github.com/OWNER/REPO/issues
+生成コマンド（PowerShell）
+```powershell
+Get-FileHash .\dist\ImgResizer-distribution.zip -Algorithm SHA256 | Format-List
