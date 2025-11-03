@@ -1,9 +1,6 @@
 # ImgResizer — ダウンロード
 
-[![Release](https://img.shields.io/github/v/release/design-pull/img-resizer)](https://github.com/design-pull/img-resizer/releases/latest)
-
 **最新リリース:** v0.1.0
-
 ---
 
 ## ダウンロード
