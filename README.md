@@ -1,74 +1,89 @@
-### リリースノート — v0.1.0
+# ImgResizer — ダウンロード
 
-概要  
-ImgResizer は単体実行ファイル形式の Windows 向け画像リサイズツールです。ドラッグ＆ドロップで画像を読み込み、プレビューを見ながらアスペクト比を維持して出力できます。
+[![Release](https://img.shields.io/github/v/release/design-pull/img-resizer)](https://github.com/design-pull/img-resizer/releases/latest)
 
-[![Release]([https://img.shields.io/github/v/release/OWNER/REPO)](https://github.com/OWNER/REPO/releases/latest](https://raw.githubusercontent.com/design-pull/img-resizer/main/dist/ImgResizer-distribution-with-installer.zip))
-
----
-
-### ダウンロードと配布物
-- ファイル: ImgResizer-distribution.zip  
-- 中身: dist\ImgResizer.exe（単体実行ファイル）  
-- 代替: ImgResizer_Installer.exe（インストーラ版）が同梱されている場合があります
+**最新リリース:** v0.1.0
 
 ---
 
-### 動作環境
+## ダウンロード
+- ZIP（実行ファイル＋インストーラ同梱）: [ImgResizer-distribution-with-installer.zip](https://raw.githubusercontent.com/design-pull/img-resizer/main/dist/ImgResizer-distribution-with-installer.zip)  
+- （代替）リリースページ: https://github.com/design-pull/img-resizer/releases/latest
+
+---
+
+## インストール方法
+- ZIP 配布
+  1. 上の ZIP をダウンロードして展開  
+  2. 展開先フォルダ内の `ImgResizer.exe` をダブルクリックして実行（Python は不要）
+- インストーラ配布（同梱している場合）
+  1. `ImgResizer_Installer.exe` を実行  
+  2. インストーラの指示に従ってインストール
+
+---
+
+## チェックサム（署名未実施のため推奨）
+- SHA256 (ImgResizer-distribution-with-installer.zip): `PUT_SHA256_HASH_HERE`
+
+PowerShell でハッシュを生成するコマンド:
+```powershell
+Get-FileHash .\dist\ImgResizer-distribution-with-installer.zip -Algorithm SHA256 | Format-List
+```
+
+ダウンロード後は上のハッシュと一致するか確認してください。
+
+---
+
+## 動作環境
 - OS: Windows 10 / Windows 11（x64 推奨）  
-- Python は不要（PyInstaller によるバンドル済み）  
-- 必要に応じて管理者権限でインストールしてください（インストーラ使用時）
+- Python 不要（PyInstaller でバンドル済み）  
+- インストーラを使う場合は管理者権限が必要になることがあります
 
 ---
 
-### インストール方法
-- ZIP 配布の場合: ZIP を展開し、ImgResizer.exe を任意のフォルダに置いてダブルクリックで実行  
-- インストーラ配布の場合: ImgResizer_Installer.exe を実行してウィザードに従ってインストール
+## 使い方（簡潔）
+1. アプリを起動する  
+2. 画像をドラッグ＆ドロップ、または「開く」で読み込み  
+3. プレビューでアスペクト比・サイズを確認  
+4. 出力設定（幅/高さ、画質）を指定して保存またはエクスポート
 
 ---
 
-### 使い方（簡潔）
-- 起動 → 画像をドラッグ＆ドロップまたは「開く」で読み込む  
-- プレビューでサイズ・アスペクトを確認 → 出力設定（幅/高さ、品質）を指定  
-- 「保存」または「エクスポート」で出力ファイルを作成
+## 注意事項と既知の問題
+- 現バージョンは未署名の初回リリースです。SmartScreen による警告が出る場合があります。  
+- SVG の読み込みは追加ライブラリ（Cairo 系）が必要になる場合があります。SVG が正しく読み込めない場合は Issue を作成してください。  
+- ZIP 配布の場合は不要な開発ファイルを含めないようにしていますが、万一不要ファイルが含まれていたら報告してください。  
+- ファイル名やパスに特殊文字や長いパスが含まれる環境では入出力で問題が出ることがあります。
 
 ---
 
-### 既知の制限と注意点
-- SmartScreen 警告: 署名未実施の初期公開版では SmartScreen による警告が出る可能性があります。署名版を後日リリース予定です。  
-- SVG サポート: SVG の読み込みには追加ライブラリ（Cairo 系）が必要な場合があります。必要な DLL が同梱されていない場合は読み込みに失敗します。  
-- 長いパスや特殊文字: 大半は動作しますが、環境によっては読み書きで問題が出る場合があります。問題を再現できるサンプルとパスを Issue に記載してください。
+## トラブルシューティング
+- 起動しない／クラッシュする  
+  - 管理者として実行してみる。  
+  - 別の PC（クリーン環境）での再現を確認してログや画面を Issue に添付してください。
+- アイコンが古く表示される  
+  - エクスプローラーのキャッシュが影響するので、エクスプローラー再起動やサインアウト/サインインを試してください。
+- ダウンロードが途中で失敗する  
+  - ブラウザのキャッシュをクリアして再試行、あるいは別ブラウザで試してください。
 
 ---
 
-### セキュリティと検証
-- ダウンロード後にハッシュで整合性を確認してください（PowerShell 例）:
-  - SHA256 を表示: Get-FileHash .\ImgResizer-distribution.zip -Algorithm SHA256  
-  - 公開されたハッシュ値と一致することを確認してください
-- 署名: 現在未署名。将来的にコード署名（signtool）を行ったビルドを公開予定です。
+## リリースノート（サマリ）
+- v0.1.0 — 初回リリース: 単体実行ファイルと基本的なリサイズ・プレビュー・エクスポート機能を提供
 
 ---
 
-### アンインストール
-- ZIP 配布: 単に実行ファイルと関連フォルダを削除してください。  
-- インストーラ配布: Windows の「設定 > アプリ」またはコントロールパネルの「プログラムのアンインストール」から削除できます。
+## サポート
+- バグ報告・要望は GitHub Issues でお願いします: https://github.com/design-pull/img-resizer/issues  
+- Issue を作成する際の推奨テンプレート:
+  - 発生手順（再現手順）  
+  - 期待される挙動と実際の挙動  
+  - OS バージョン、使用ファイル（可能なら添付）、スクリーンショットやログ
 
 ---
 
-### トラブルシューティング（よくある質問）
-- 起動しない／エラーが出る → 管理者権限で実行してみる。別の PC（クリーン環境）での再現を確認。  
-- アイコンが古い → エクスプローラーのキャッシュが残っている可能性があるため再起動してください。  
-- サポートにつなげる情報 → 発生手順、OS バージョン、該当ファイルのログやスクリーンショットを添えて Issue を作成してください。
-
----
-
-### 変更履歴
-- v0.1.0 — 初回リリース: 単体実行ファイルの公開、基本的なリサイズ・プレビュー・エクスポート機能を提供
-
----
-
-### サポートと連絡先
-- バグ報告・要望: GitHub Issues にて報告してください（リポジトリの Issues をご利用ください）  
-- 提出時のテンプレ（推奨）: 発生手順、期待挙動、実際の挙動、スクリーンショット、OS バージョン
+## 将来的な予定
+- 署名済みビルドの公開（SmartScreen の誤検出を低減）  
+- GitHub Actions を使った自動ビルド・自動リリースおよび docs 自動更新
 
 ---
